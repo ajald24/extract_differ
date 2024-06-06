@@ -3,4 +3,3 @@ pandas
 streamlit
 ginza==5.1.1
 ja_ginza
-string
