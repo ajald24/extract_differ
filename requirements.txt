@@ -1,7 +1,6 @@
 spacy
 pandas
 ja_ginza
-spacy==3.3.1
+spacy
 ginza==5.1.0
-streamlit==1.22.0
-pydantic==1.8.2
+streamlit
