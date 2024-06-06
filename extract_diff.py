@@ -1,7 +1,7 @@
 import pandas as pd
 import spacy
 import ginza
-from collections import Counter
+# from collections import Counter
 import string
 import streamlit as st
 
@@ -17,9 +17,9 @@ def extract_nouns(text):
     for token in [token for token in doc if token.pos_ in ('NOUN', 'PROPN', 'ADJ','NUM') and token.text not in stopwords and token.text not in string.punctuation]:
       print(token.text, token.pos_)
     words = [token.text for token in doc if token.pos_ in ('NOUN', 'PROPN', 'ADJ','NUM') and token.text not in stopwords and token.text not in string.punctuation]
-    counter = Counter(words)
-    keywords = {word for word, freq in counter.items()}
-    return keywords
+    # counter = Counter(words)
+    # keywords = {word for word, freq in counter.items()}
+    return words
 
 def highlight_keywords(text, keywords):
     for keyword in keywords:
