@@ -6,16 +6,16 @@ import ginza
 import streamlit as st
 
 # 日本語ストップワードの読み込み
-# with open('stopwords.txt', 'r', encoding='utf-8') as file:
-#     stopwords = set(file.read().splitlines())
+with open('stopwords.txt', 'r', encoding='utf-8') as file:
+    stopwords = set(file.read().splitlines())
 
 # SpaCyのGinzaモデルの読み込み
 nlp = spacy.load('ja_ginza')
 
 def extract_nouns(text):
     doc = nlp(text)
-    # words = [token.text for token in doc if token.pos_ in ('NOUN', 'PROPN', 'ADJ','NUM') and token.text not in stopwords and token.text not in string.punctuation]
-    words = [token.text for token in doc if token.pos_ in ('NOUN', 'PROPN', 'ADJ','NUM') and token.text not in string.punctuation]
+    words = [token.text for token in doc if token.pos_ in ('NOUN', 'PROPN', 'ADJ','NUM') and token.text not in stopwords and token.text not in string.punctuation]zzzzz
+    # words = [token.text for token in doc if token.pos_ in ('NOUN', 'PROPN', 'ADJ','NUM') and token.text not in string.punctuation]
     # counter = Counter(words)
     # keywords = {word for word, freq in counter.items()}
     return words
