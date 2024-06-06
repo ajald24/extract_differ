@@ -1,6 +1,6 @@
 spacy
 pandas
 ja_ginza
-spacy
+spacy==3.2.1
 ginza==5.1.0
 streamlit
