@@ -14,8 +14,6 @@ nlp = spacy.load('ja_ginza')
 
 def extract_nouns(text):
     doc = nlp(text)
-    for token in [token for token in doc if token.pos_ in ('NOUN', 'PROPN', 'ADJ','NUM') and token.text not in stopwords and token.text not in string.punctuation]:
-      print(token.text, token.pos_)
     words = [token.text for token in doc if token.pos_ in ('NOUN', 'PROPN', 'ADJ','NUM') and token.text not in stopwords and token.text not in string.punctuation]
     # counter = Counter(words)
     # keywords = {word for word, freq in counter.items()}
@@ -44,8 +42,8 @@ def process_excel(input_file, output_file):
             keywords2 = extract_nouns(text2)
             
             # 片方の文章にしか含まれていないキーフレーズ
-            unique_to_text1 = keywords1 - keywords2
-            unique_to_text2 = keywords2 - keywords1
+            unique_to_text1 = set(keywords1) - set(keywords2)
+            unique_to_text2 = set(keywords2) - set(keywords1)
 
             # 文章に含まれているキーフレーズを除外
             cleaned_text1 = [txt for txt in unique_to_text1 if txt not in text2]
@@ -61,6 +59,7 @@ def process_excel(input_file, output_file):
         
         # 結果をExcelファイルに保存
         df.to_excel(output_file, index=False)
+        st.success(f"処理が完了しました。結果は{output_file}に保存されました。")
 
 # ファイルのパス
 input_file = st.file_uploader('Excelファイルを選択', type='xlsx')
