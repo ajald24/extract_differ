@@ -25,41 +25,46 @@ def highlight_keywords(text, keywords):
     return text
 
 def process_excel(input_file, output_file):
-    # Excelファイルを読み込む
-    df = pd.read_excel(input_file)
-    
-    col1 = st.selectbox('列を選択1',df.columns)
-    col2 = st.selectbox('列を選択2',df.columns)
+    if input_file is not None:
+        # Excelファイルを読み込む
+        df = pd.read_excel(input_file)
 
-    if st.button('実行'):
-        # 各行の処理
-        for index, row in df.iterrows():
-            text1 = row[col1]
-            text2 = row[col2]
-            
-            # キーフレーズを抽出
-            keywords1 = extract_nouns(text1)
-            keywords2 = extract_nouns(text2)
-            
-            # 片方の文章にしか含まれていないキーフレーズ
-            unique_to_text1 = set(keywords1) - set(keywords2)
-            unique_to_text2 = set(keywords2) - set(keywords1)
-
-            # 文章に含まれているキーフレーズを除外
-            cleaned_text1 = [txt for txt in unique_to_text1 if txt not in text2]
-            cleaned_text2 = [txt for txt in unique_to_text2 if txt not in text1]
-            
-            # 強調表示
-            highlighted_text1 = highlight_keywords(text1, cleaned_text1)
-            highlighted_text2 = highlight_keywords(text2, cleaned_text2)
-            
-            # データフレームに保存
-            df.at[index, 'Text1'] = highlighted_text1
-            df.at[index, 'Text2'] = highlighted_text2
+        st.write("Excelファイルの内容を読み込みました。")
         
-        # 結果をExcelファイルに保存
-        df.to_excel(output_file, index=False)
-        st.success(f"処理が完了しました。結果は{output_file}に保存されました。")
+        col1 = st.selectbox('列を選択1',df.columns)
+        col2 = st.selectbox('列を選択2',df.columns)
+    
+        if st.button('実行'):
+            # 各行の処理
+            for index, row in df.iterrows():
+                text1 = row[col1]
+                text2 = row[col2]
+                
+                # キーフレーズを抽出
+                keywords1 = extract_nouns(text1)
+                keywords2 = extract_nouns(text2)
+                
+                # 片方の文章にしか含まれていないキーフレーズ
+                unique_to_text1 = set(keywords1) - set(keywords2)
+                unique_to_text2 = set(keywords2) - set(keywords1)
+    
+                # 文章に含まれているキーフレーズを除外
+                cleaned_text1 = [txt for txt in unique_to_text1 if txt not in text2]
+                cleaned_text2 = [txt for txt in unique_to_text2 if txt not in text1]
+                
+                # 強調表示
+                highlighted_text1 = highlight_keywords(text1, cleaned_text1)
+                highlighted_text2 = highlight_keywords(text2, cleaned_text2)
+                
+                # データフレームに保存
+                df.at[index, 'Text1'] = highlighted_text1
+                df.at[index, 'Text2'] = highlighted_text2
+            
+            # 結果をExcelファイルに保存
+            df.to_excel(output_file, index=False)
+            st.success(f"処理が完了しました。結果は{output_file}に保存されました。")
+    else:
+        st.warning("Excelファイルをアップロードしてください。")
 
 # ファイルのパス
 input_file = st.file_uploader('Excelファイルを選択', type='xlsx')
