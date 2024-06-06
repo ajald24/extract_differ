@@ -46,8 +46,8 @@ def process_excel(input_file, output_file):
                 keywords2 = extract_nouns(text2)
                 
                 # 片方の文章にしか含まれていないキーフレーズ
-                unique_to_text1 = set(keywords1) - set(keywords2)
-                unique_to_text2 = set(keywords2) - set(keywords1)
+                unique_to_text1 = keywords1 - keywords2
+                unique_to_text2 = keywords2 - keywords1
     
                 # 文章に含まれているキーフレーズを除外
                 cleaned_text1 = [txt for txt in unique_to_text1 if txt not in text2]
