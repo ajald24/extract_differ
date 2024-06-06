@@ -2,7 +2,7 @@ import pandas as pd
 import spacy
 import ginza
 # from collections import Counter
-import string
+# import string
 import streamlit as st
 
 # 日本語ストップワードの読み込み
